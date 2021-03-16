@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "html-list-rendering-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/htmlListRendering/HtmlListRenderingWebPart.js",
+          "manifest": "./src/webparts/htmlListRendering/HtmlListRenderingWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "HtmlListRenderingWebPartStrings": "lib/webparts/htmlListRendering/loc/{locale}.js",
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+  }
+}
