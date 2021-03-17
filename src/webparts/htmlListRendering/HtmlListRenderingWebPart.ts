@@ -4,7 +4,7 @@ import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneCheckbox,
-  PropertyPaneTextField
+  PropertyPaneSlider
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
@@ -24,6 +24,7 @@ export interface IHtmlListRenderingWebPartProps {
   header: string;
   template: string;
   log: boolean;
+  size: number;
 }
 
 export default class HtmlListRenderingWebPart extends BaseClientSideWebPart<IHtmlListRenderingWebPartProps> {
@@ -36,7 +37,8 @@ export default class HtmlListRenderingWebPart extends BaseClientSideWebPart<IHtm
         view: this.properties.view,
         header: this.properties.header,
         template: this.properties.template,
-        log: this.properties.log
+        log: this.properties.log,
+        size: this.properties.size
       }
     );
 
@@ -65,7 +67,7 @@ export default class HtmlListRenderingWebPart extends BaseClientSideWebPart<IHtm
       pages: [
         {
           header: {
-            description: 'Select a list and optionally a view. You can log the items returned in the console. The container for rendered items is flex. Access the item properties using {{PropertyName.SubPropertyName}}.'
+            description: 'Select a list and optionally a view. You can log the items returned in the console using \'Log items\'. The container for the rendered items is flex. Access the item properties using {{PropertyName.SubPropertyName}}.'
           },
           groups: [
             {
@@ -116,6 +118,12 @@ export default class HtmlListRenderingWebPart extends BaseClientSideWebPart<IHtm
                   properties: this.properties,
                   key: 'template',
                   language: PropertyFieldCodeEditorLanguages.HTML
+                }),
+                PropertyPaneSlider('size', {
+                  label: 'Size override (in %)',
+                  min: 100,
+                  max: 200,
+                  step: 5
                 })
               ]
             }

@@ -8,6 +8,7 @@ import "@pnp/sp/views";
 import "@pnp/sp/items";
 
 import "ts-replace-all";
+import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 
 export interface HtmlListRenderingProps {
   list: string;
@@ -15,6 +16,7 @@ export interface HtmlListRenderingProps {
   header: string;
   template: string;
   log: boolean;
+  size: number;
 }
 
 interface HtmlListRenderingState {
@@ -24,12 +26,14 @@ interface HtmlListRenderingState {
 export default class HtmlListRendering extends React.Component<HtmlListRenderingProps, HtmlListRenderingState> {
   private list: string;
   private view: string;
+  private log: boolean;
 
   constructor(props: HtmlListRenderingProps) {
     super(props);
 
     this.list = props.list;
     this.view = props.view;
+    this.log = props.log;
 
     this.state = { items: [] };
 
@@ -40,9 +44,10 @@ export default class HtmlListRendering extends React.Component<HtmlListRendering
 
   public render(): React.ReactElement<HtmlListRenderingProps> {
     let items = this.state.items.map(item => this.renderItem(item));
+    let size = this.props.size || 100;
 
     return (
-      <div className={styles.htmlListRendering}>
+      <div className={styles.htmlListRendering} style={{width: `${size}%`}}>
         {this.props.header && this.props.header !== '' &&
           <div className={styles.header} dangerouslySetInnerHTML={{ __html: this.props.header }}>
           </div>
@@ -54,16 +59,22 @@ export default class HtmlListRendering extends React.Component<HtmlListRendering
   }
 
   public componentDidUpdate() {
-    if (this.props.list !== this.list || this.props.view !== this.view) {
+    if (this.props.list !== this.list || this.props.view !== this.view || this.props.log !== this.log) {
       this.list = this.props.list;
       this.view = this.props.view;
+      this.log = this.props.log;
       this.refreshItems();
     }
   }
 
-  private async refreshItems() {
+  private async refreshItems(): Promise<void> {
     if (this.props.list && this.props.template) {
-      let items = await this.getMockItems();
+      let items: any[];
+      if (Environment.type === EnvironmentType.Local)
+        items = await this.getMockItems();
+      else
+        items = await this.getItems();
+
       if (this.props.log && items.length > 0)
         console.log(items);
       this.setState({ items: items });

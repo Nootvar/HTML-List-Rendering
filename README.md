@@ -1,8 +1,8 @@
-# html-list-rendering
+# HTML List rendering
 
 ## Summary
 
-Short summary on functionality and used technologies.
+Render a list using a custom HTML template. You can also define an HTML template for the header of the list.
 
 [picture of the solution in action, if possible]
 
@@ -19,20 +19,19 @@ Short summary on functionality and used technologies.
 
 ## Prerequisites
 
-> Any special pre-requisites?
+> None
 
 ## Solution
 
 Solution|Author(s)
 --------|---------
-folder name | Author details (name, company, twitter alias with link)
+HTML List Rendering | Nathan Prijot
 
 ## Version history
 
 Version|Date|Comments
 -------|----|--------
-1.1|March 10, 2021|Update comment
-1.0|January 29, 2021|Initial release
+1.0.0.0|March 16, 2021|Initial development
 
 ## Disclaimer
 
@@ -47,18 +46,19 @@ Version|Date|Comments
 - in the command-line run:
   - **npm install**
   - **gulp serve**
-
-> Include any additional steps as needed.
+- You might want to change the mock items to fit your use cases
 
 ## Features
 
-Description of the extension that expands upon high-level summary above.
+You can select any list in you SharePoint site.
 
-This extension illustrates the following concepts:
+You can also select a view on the list for filtering.
 
-- topic 1
-- topic 2
-- topic 3
+The HTML template is repeated for every items. Use the `Log items` web part property to see the items recovered in the JavaScript console.
+To insert item values into the template, use the following : `{{PropertyName.SubPropertyName}}`.
+The items are rendered into a flex container with 100% width.
+
+The HTML header template is applied into a normal container with 100% width. 
 
 > Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
 

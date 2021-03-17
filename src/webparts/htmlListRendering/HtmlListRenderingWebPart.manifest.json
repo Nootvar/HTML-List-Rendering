@@ -21,8 +21,9 @@
     "description": { "default": "Render the content of a list using custom HTML" },
     "officeFabricIconFontName": "AppIconDefaultList",
     "properties": {
-      "header": "<h1>Title</h1>",
-      "template": "<h1>{{Title}}</h1>"
+      "header": "<div style=\"box-sizing: border-box; width:100%; padding: 15px;\"><h1>Title</h1></div>",
+      "template": "<div style=\"box-sizing: border-box; width:100%; padding: 15px;\"><h1>{{Title}}</h1></div>",
+      "size": 100
     }
   }]
 }
