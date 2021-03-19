@@ -9,6 +9,7 @@ import "@pnp/sp/items";
 
 import "ts-replace-all";
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
+import Renderer from '../model/Renderer';
 
 export interface HtmlListRenderingProps {
   list: string;
@@ -97,14 +98,17 @@ export default class HtmlListRendering extends React.Component<HtmlListRendering
 
   private async getMockItems(): Promise<any[]> {
     return Promise.resolve([
-      { Title: 'one', One: { Two: { Three: 'here one' } } },
-      { Title: 'two', One: { Two: { Three: 'here two' } } },
-      { Title: 'three', One: { Two: { Three: 'here three' } } },
-      { Title: 'four', One: { Two: { Three: 'here four' } } }
+      { Title: 'one', Date: '11-05-1999'},
+      { Title: 'two'},
+      { Title: 'three', Date: '11-05-2003'},
+      { Title: 'four'}
     ]);
   }
 
   private renderItem(item: any): string {
+    let renderer = new Renderer(item, this.props.template);
+    return renderer.renderResult;
+
     return this.props.template.replaceAll(/\{\{([^}]+)\}\}/g, (match: string, property: string) => {
       let split = property.split('.');
       let value = item;
